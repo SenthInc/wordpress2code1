@@ -1,19 +1,15 @@
-"use client";
+// Sends the form to canada_raj@hotmail.com through the visitor's email app.
+// No server or API key is needed, which suits the static site.
+const TO_EMAIL = "canada_raj@hotmail.com";
 
-import { useState, type FormEvent } from "react";
-
-// The export has no working form backend. This form validates input and
-// shows a notice; connect onSubmit to an email or CRM endpoint before launch.
 export default function ContactForm() {
-  const [status, setStatus] = useState<"idle" | "sent">("idle");
-
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setStatus("sent");
-  }
-
   return (
-    <form className="form" onSubmit={handleSubmit}>
+    <form
+      className="form"
+      action={`mailto:${TO_EMAIL}?subject=Website%20inquiry`}
+      method="post"
+      encType="text/plain"
+    >
       <div className="form-row">
         <label>
           Name
@@ -35,12 +31,9 @@ export default function ContactForm() {
       <button className="btn btn-primary" type="submit">
         Send
       </button>
-      {status === "sent" && (
-        <p className="form-note" role="status">
-          Thanks for your message. This form is not connected to a mail service
-          yet, so please also email us directly.
-        </p>
-      )}
+      <p className="form-note">
+        Clicking Send opens your email app with your message addressed to {TO_EMAIL}.
+      </p>
     </form>
   );
 }
